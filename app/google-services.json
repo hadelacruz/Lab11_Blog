@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "874522352757",
+    "project_id": "lab11blog",
+    "storage_bucket": "lab11blog.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874522352757:android:d09d6e6672eb89a7caac3c",
+        "android_client_info": {
+          "package_name": "com.example.lab11"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZto8cEc92Oqd5ukGXoKWx2sqhGuQ7gIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
