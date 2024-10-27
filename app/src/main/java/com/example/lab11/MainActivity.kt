@@ -25,26 +25,28 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.lab11.data.UserDataStore
 import com.example.lab11.screens.BlogScreen
 import com.example.lab11.screens.HomeScreen
+import com.example.lab11.screens.UserConfigScreen
 import com.example.lab11.ui.theme.Lab11Theme
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val userDataStore = UserDataStore(this)
         enableEdgeToEdge()
         setContent {
-            Lab11Theme{
-                MicroBlogApp(modifier = Modifier.fillMaxSize())
+            Lab11Theme {
+                MicroBlogApp(modifier = Modifier.fillMaxSize(), userDataStore = userDataStore)
             }
         }
     }
 }
 
-
 @Composable
-fun MicroBlogApp(modifier: Modifier = Modifier){
+fun MicroBlogApp(modifier: Modifier = Modifier, userDataStore: UserDataStore){
     val navController = rememberNavController()
 
     Scaffold (
@@ -52,17 +54,18 @@ fun MicroBlogApp(modifier: Modifier = Modifier){
             BottomNavigationBar(navController = navController)
         }
     ) { innerPadding ->
-        NavHostContainer(navController = navController, modifier = Modifier.padding(innerPadding))
+        NavHostContainer(navController = navController, modifier = Modifier.padding(innerPadding), userDataStore = userDataStore)
     }
 }
 
 @Composable
-fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modifier){
+fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modifier, userDataStore: UserDataStore){
 
 
-    NavHost(navController = navController, startDestination = Screen.Home.route, modifier = modifier){
+    NavHost(navController = navController, startDestination = Screen.Profile.route, modifier = modifier){
+        composable(Screen.Profile.route) { UserConfigScreen(userDataStore = userDataStore) }
         composable(Screen.Home.route) { HomeScreen() }
-        composable(Screen.Profile.route) { BlogScreen() }
+        composable(Screen.Publications.route) { BlogScreen(userDataStore = userDataStore) }
     }
 }
 
@@ -70,7 +73,8 @@ fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modi
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
         Screen.Home,
-        Screen.Profile,
+        Screen.Publications,
+        Screen.Profile
     )
 
     NavigationBar {
